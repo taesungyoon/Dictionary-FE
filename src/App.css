@@ -1,0 +1,173 @@
+/* App.css */
+
+/* Yellow stripe header */
+.header {
+  background-color: yellow;
+  padding: 10px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.sign-up-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  position: absolute;
+  top: 10px; /* Adjust the top and right values as needed */
+  right: 10px;
+}
+
+/* Styles for the dictionary app */
+.dictionary-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Search input styles */
+input {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* Search button styles */
+button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.search-results {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.todays-sentence-section {
+  display: flex; /* Use flexbox to make child elements flex items */
+  justify-content: space-between; /* Space items evenly along the main axis */
+  align-items: center; /* Center items along the cross axis */
+  margin: 20px 0; /* Add margin as needed */
+  width: 95%;
+}
+
+/* Today's Sentence box styles */
+.todays-sentence {
+  border: 2px solid black; /* Black border */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Add padding as needed */
+  width: 100%; /* Adjust the width as needed */
+  margin-right: 20px; /* Increase the margin as needed */
+}
+
+/* "Go to IELTS Book" button styles */
+.go-to-ielts-book {
+  padding: 20px; /* Adjust the padding as needed */
+  font-size: 16px;
+  width: 100%; /* Same width as the box */
+}
+
+/* App.css */
+
+/* ... (previous styles) */
+
+/* Container for Search Results */
+.search-results-container {
+  padding: 20px; /* Add padding as needed */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  height: 50vh; /* Full height of the viewport */
+  width: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-results-box {
+  background-color: white; /* White background color */
+  border: 2px solid #4CAF50; /* Green border */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Add padding as needed */
+  width: 100%; /* Adjust the width as needed */
+}
+.result-header {
+  display: flex;
+  align-items: center;
+}
+
+.audio-button {
+  margin-left: 10px; /* Adjust the margin as needed */
+  font-size: 20px; /* Adjust the font size as needed */
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  /* Add additional styles as needed for your design */
+}
+/* Placeholder styles for dictionary result components */
+.result-word {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.result-definition {
+  margin-top: 10px; /* Adjust the margin as needed */
+}
+
+.result-synonyms {
+  margin-top: 10px; /* Adjust the margin as needed */
+  color: #4CAF50;
+  text-align: center;
+}
+
+.result-antonyms {
+  margin-top: 10px; /* Adjust the margin as needed */
+  color: red;
+  text-align: center;
+}
+
+
+
+/* About Us section styles */
+.about-section {
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Add padding as needed */
+  margin-top: 20px; /* Adjust the margin as needed */
+  width: 100%; /* Full width */
+  background-color: grey;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap into the next row */
+  justify-content: space-around; /* Evenly distribute items in the row */
+  margin-top: 20px; /* Add margin as needed */
+}
+
+.options button {
+  padding: 10px 40px;
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+}
+
+
+.footer {
+  color: black; /* White text color */
+  text-align: center;
+  padding: 10px; /* Add padding as needed */
+  width: 100%; /* Take up the full width */
+  bottom: 0; /* Stick to the bottom of the viewport */
+  background-color: grey;
+}
+
