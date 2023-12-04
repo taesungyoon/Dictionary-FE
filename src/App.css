@@ -1,6 +1,4 @@
-/* App.css */
 
-/* Yellow stripe header */
 .header {
   background-color: yellow;
   padding: 10px;
@@ -14,17 +12,20 @@
   padding: 10px 20px;
   font-size: 16px;
   position: absolute;
-  top: 10px; /* Adjust the top and right values as needed */
+  top: 10px;
   right: 10px;
 }
 
-/* Styles for the dictionary app */
+
 .dictionary-app {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  min-height: 100vh; 
+  width: 100%; 
+  align-items: center; 
+  justify-content: flex-start; 
 }
+
 
 .search-box {
   display: flex;
@@ -33,14 +34,14 @@
   margin-top: 20px;
 }
 
-/* Search input styles */
+
 input {
   width: 300px;
   padding: 10px;
   font-size: 16px;
 }
 
-/* Search button styles */
+
 button {
   margin-left: 10px;
   padding: 10px 20px;
@@ -53,50 +54,47 @@ button {
 }
 
 .todays-sentence-section {
-  display: flex; /* Use flexbox to make child elements flex items */
-  justify-content: space-between; /* Space items evenly along the main axis */
-  align-items: center; /* Center items along the cross axis */
-  margin: 20px 0; /* Add margin as needed */
+  display: flex; 
+  justify-content: space-between;
+  align-items: center; 
+  margin: 20px 0; 
   width: 95%;
 }
 
-/* Today's Sentence box styles */
+
 .todays-sentence {
-  border: 2px solid black; /* Black border */
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px; /* Add padding as needed */
-  width: 100%; /* Adjust the width as needed */
-  margin-right: 20px; /* Increase the margin as needed */
+  border: 2px solid black;
+  border-radius: 10px; 
+  padding: 20px; 
+  width: 100%; 
+  margin-right: 20px; 
 }
 
-/* "Go to IELTS Book" button styles */
+
 .go-to-ielts-book {
-  padding: 20px; /* Adjust the padding as needed */
+  padding: 20px;
   font-size: 16px;
-  width: 100%; /* Same width as the box */
+  width: 100%; 
 }
 
-/* App.css */
-
-/* ... (previous styles) */
-
-/* Container for Search Results */
 .search-results-container {
-  padding: 20px; /* Add padding as needed */
-  box-sizing: border-box; /* Include padding and border in element's total width and height */
-  height: 50vh; /* Full height of the viewport */
-  width: 100vh;
+  padding: 20px;
+  box-sizing: border-box; 
+  overflow: auto; 
+  flex-grow: 1;
+  width: 100%; 
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+
 .search-results-box {
-  background-color: white; /* White background color */
-  border: 2px solid #4CAF50; /* Green border */
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px; /* Add padding as needed */
-  width: 100%; /* Adjust the width as needed */
+  background-color: white; 
+  border: 2px solid #4CAF50; 
+  border-radius: 10px; 
+  padding: 20px; 
+  width: 100%; 
 }
 .result-header {
   display: flex;
@@ -104,12 +102,11 @@ button {
 }
 
 .audio-button {
-  margin-left: 10px; /* Adjust the margin as needed */
-  font-size: 20px; /* Adjust the font size as needed */
+  margin-left: 10px; 
+  font-size: 20px; 
   cursor: pointer;
   background-color: transparent;
-  border: none;
-  /* Add additional styles as needed for your design */
+  
 }
 /* Placeholder styles for dictionary result components */
 .result-word {
@@ -118,37 +115,57 @@ button {
 }
 
 .result-definition {
-  margin-top: 10px; /* Adjust the margin as needed */
+  margin-top: 10px; 
 }
 
+.definitions-list {
+  list-style-type: none; 
+  padding: 0; 
+}
+
+.examples-section {
+  margin-top: 10px;
+}
+
+.examples-list {
+  list-style-type: none; 
+  padding-left: 20px; 
+}
+
+
+.examples-list li:before {
+  content: "- "; 
+}
+
+.synonyms-antonyms-container {
+  margin-top: 10px;
+  text-align: center;
+}
 .result-synonyms {
-  margin-top: 10px; /* Adjust the margin as needed */
+  margin-top: 10px; 
   color: #4CAF50;
   text-align: center;
 }
 
 .result-antonyms {
-  margin-top: 10px; /* Adjust the margin as needed */
+  margin-top: 10px; 
   color: red;
   text-align: center;
 }
 
-
-
-/* About Us section styles */
 .about-section {
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px; /* Add padding as needed */
-  margin-top: 20px; /* Adjust the margin as needed */
-  width: 100%; /* Full width */
+  border-radius: 10px; 
+  padding: 20px; 
+  margin-top: 20px; 
+  width: 100%; 
   background-color: grey;
 }
 
 .options {
   display: flex;
-  flex-wrap: wrap; /* Allow items to wrap into the next row */
-  justify-content: space-around; /* Evenly distribute items in the row */
-  margin-top: 20px; /* Add margin as needed */
+  flex-wrap: wrap; 
+  justify-content: space-around; 
+  margin-top: 20px; 
 }
 
 .options button {
@@ -157,17 +174,19 @@ button {
   color: black;
   font-weight: bold;
   border: none;
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 5px;
   cursor: pointer;
 }
 
-
-.footer {
-  color: black; /* White text color */
+ /* Footer was sticking on top of search container. So footer needs to stay bottom*/
+ .footer {
+  color: black; 
   text-align: center;
-  padding: 10px; /* Add padding as needed */
-  width: 100%; /* Take up the full width */
-  bottom: 0; /* Stick to the bottom of the viewport */
+  padding: 10px;
+  width: 100%; 
   background-color: grey;
+  position: static;
+  margin-top: auto; 
 }
+
 
