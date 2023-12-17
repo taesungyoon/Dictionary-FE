@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Content from './Content';
 import './App.css';
 
@@ -8,14 +8,30 @@ const Dictionary = () => {
   const [wordData, setWordData] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
 
-  const handleSearchWord = (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    if (inpWord.length > 1) {
+      fetch(`/autocomplete/${inpWord}`) 
+        .then((response) => response.json())
+        .then((data) => {
+          setSuggestions(data);
+        })
+        .catch((error) => {
+          console.error('Error fetching suggestions:', error);
+          setSuggestions([]);
+        });
+    } else {
+      setSuggestions([]);
+    }
+  }, [inpWord]);
+  
+  const handleSearchWord = (wordToSearch) => {
     setIsLoading(true);
     setError('');
-    setDisplayedWord(inpWord);
-
-    fetch(`/search/${inpWord}`)
+    setDisplayedWord(wordToSearch);
+  
+    fetch(`/search/${wordToSearch}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Word not found in the database.');
@@ -23,15 +39,8 @@ const Dictionary = () => {
         return response.json();
       })
       .then(data => {
-        const newData = {
-          lemma: data.lemma,
-          meanings: [{
-            definitions: [{ definition: data.definition }],
-            synonyms: data.synonyms ? data.synonyms.split(', ') : [],
-            antonyms: data.antonyms ? data.antonyms.split(', ') : []
-          }]
-        };
-        setWordData(newData);
+        // Assuming the API returns an object with lemma, synonyms, antonyms, and definitions
+        setWordData(data);
         setIsLoading(false);
       })
       .catch(error => {
@@ -39,6 +48,12 @@ const Dictionary = () => {
         setError(error.message);
         setIsLoading(false);
       });
+  };
+
+
+  const onSelectSuggestion = (suggestion) => {
+    setInpWord(suggestion);
+    handleSearchWord(suggestion); 
   };
 
   return (
@@ -50,9 +65,10 @@ const Dictionary = () => {
       error={error}
       isLoading={isLoading}
       handleSearchWord={handleSearchWord}
+      suggestions={suggestions}
+      onSelectSuggestion={onSelectSuggestion}
     />
   );
 };
-
 export default Dictionary;
 

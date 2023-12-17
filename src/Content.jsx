@@ -1,4 +1,6 @@
+
 import React from 'react';
+import Autocomplete from './Autocomplete';
 
 const Content = ({
   inpWord,
@@ -7,8 +9,17 @@ const Content = ({
   wordData,
   error,
   isLoading,
-  handleSearchWord
+  handleSearchWord,
+  suggestions,
+  onSelectSuggestion
 }) => {
+
+  const onSubmitSearch = (event) => {
+    event.preventDefault(); 
+    handleSearchWord(inpWord);
+  };
+
+
   return (
     <div className="dictionary-app">
       <header className="header">
@@ -17,14 +28,13 @@ const Content = ({
         <button className="sign-up-button">Sign Up</button>
       </header>
 
-      <form className="search-box" onSubmit={handleSearchWord}>
-        <input
-          type="text"
-          value={inpWord}
-          onChange={(e) => setInpWord(e.target.value)}
-          placeholder="Type a word"
-          disabled={isLoading}
-        />
+      <form className="search-box" onSubmit={onSubmitSearch}>
+        <Autocomplete
+        suggestions={suggestions}
+        value={inpWord}
+        onChange={(value) => setInpWord(value)}
+        onSelect={onSelectSuggestion} 
+      />
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Searching...' : 'Search'}
         </button>
@@ -39,27 +49,19 @@ const Content = ({
       </div>
 
       <div className="search-results-container">
-        {error && <div className="error">{error}</div>}
-        {wordData && (
-          <div className="search-results-box">
-            <div className="result-header">
-              <h3 className="result-word">{displayedWord}</h3>
-              {/* Audio will be put here later */}
-            </div>
-            {wordData.meanings.map((meaning, index) => (
-              <div key={index} className="meaning">
-                <h4>{meaning.partOfSpeech}</h4>
-                {meaning.definitions.map((definition, defIndex) => (
-                  <div key={defIndex}>
-                    <p className="result-definition">{definition.definition}</p>
-                    {/* Adding the example later if we got one */}
-                  </div>
-                ))}
-                <p>Synonyms: {meaning.synonyms && meaning.synonyms.length ? meaning.synonyms.join(', ') : 'None'}</p>
-                <p>Antonyms: {meaning.antonyms && meaning.antonyms.length ? meaning.antonyms.join(', ') : 'None'}</p>
-              </div>
-            ))}
-          </div>
+  {error && <div className="error">{error}</div>}
+  {wordData && (
+    <div className="search-results-box">
+      <div className="result-header">
+        <h3 className="result-word">{wordData.lemma}</h3>
+        {/* Audio will be put here later */}
+      </div>
+      <div className="meaning">
+        <p className="result-definition">{wordData.definition}</p>
+        <p>Synonyms: {wordData.synonyms && wordData.synonyms.split(', ').join(', ')}</p>
+        <p>Antonyms: {wordData.antonyms && wordData.antonyms.split(', ').join(', ')}</p>
+      </div>
+    </div>
         )}
       </div>
       <footer className="footer">
