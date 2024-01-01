@@ -9,6 +9,26 @@ const Dictionary = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [searchHistory, setSearchHistory] = useState([]);
+  const [randomWord, setRandomWord] = useState(null);
+
+
+  // Today sentence added
+  useEffect(() => {
+    fetch('http://localhost:5000/randomWord')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch random word.');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setRandomWord(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching random word:', error);
+      });
+  }, []);
+
 
   useEffect(() => {
     // Fetch search history from the server when the component mounts
@@ -16,7 +36,7 @@ const Dictionary = () => {
   }, []);
 
   useEffect(() => {
-    if (inpWord.length > 1) {
+    if (inpWord.length >= 1) {
       fetch(`http://localhost:5000/autocomplete/${inpWord}`)
         .then((response) => response.json())
         .then((data) => {
@@ -79,6 +99,7 @@ const Dictionary = () => {
         displayedWord={displayedWord}
         wordData={wordData}
         error={error}
+        randomWord={randomWord}
         isLoading={isLoading}
         handleSearchWord={handleSearchWord}
         suggestions={suggestions}

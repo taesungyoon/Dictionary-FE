@@ -8,7 +8,7 @@ const Autocomplete = ({ suggestions, value, onChange, onSelect }) => {
     const userInput = event.target.value;
     onChange(userInput);
 
-    if (userInput.length > 0) {
+    if (userInput.length >= 1) {
       setFilteredSuggestions(
         suggestions.filter(suggestion =>
           suggestion.toLowerCase().startsWith(userInput.toLowerCase())
