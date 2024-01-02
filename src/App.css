@@ -1,16 +1,16 @@
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 0.5vw;
 }
 
 ::-webkit-scrollbar-track {
-  border-radius: 8px;
+  border-radius: 1vh;
   background-color: #e7e7e7;
   border: 1px solid #cacaca;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 8px;
+  border-radius: 1vh;
   background-color: #363636;
 }
 @font-face {
@@ -21,7 +21,6 @@
 .dictionary-app{
   background: url(./component/img/Background.png);
   background-size: cover;
-
 }
 /* header */
 .header {
@@ -56,7 +55,7 @@
     font-family: "Inter UI","SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
     font-size: 16px;
     font-weight: 500;
-    height: 48px;
+    height: 5vh;
     padding: 0 1.6rem;
     text-align: center;
     text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
@@ -65,6 +64,16 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     margin: 5px;
+    width: 6vw;
+    align-items: center;
+  }
+  @media screen and (max-width: 1600px) {
+    .au-button {
+      padding: 0;
+      align-items: center;
+      font-size: 15px;
+    }
+    
   }
   .au-button:hover {
     box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
@@ -73,6 +82,8 @@
   .au-button a{
     text-decoration: none;
     color: white;
+    text-align: center;
+    width: fit-content;
   }
   
 .dictionary-app {
@@ -87,39 +98,62 @@
 
 .search-box {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   position: relative; /* For absolute positioning of suggestions dropdown */
-  width: 100%;
+  width: 80%;
   margin: 0;
   padding: 0;
   height: fit-content;
 }
+@media screen and (max-width: 1600px) {
+  .search-box {
+    width: 70%;
+  }
+  
+}
 
 .search-box input {
+  margin: 20px;
   padding: 20px;
   font-size: 16px;
   border: 1px solid #ddd;
   border-radius: 50px;
-  margin: 10px;
+  width: 93%;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 1px 2px 3px;
+  margin-bottom: 0;
 }
-
-
+@media screen and (max-width: 1200px) {
+  .search-box input {
+    width: 90%;
+    
+  }
+  .half-right-section {
+    width: 50vw;
+  }
+}
 .search-box button {
-  margin: 10px;
+  margin: 20px;
+  padding: 20px;
   font-size: 16px;
   background-color: #4CAF50;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 50px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;}
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  margin-bottom: 0;}
 
+  @media screen and (min-width: 1601px) {
+    .search-box button {
+      margin-left: 0;
+    }
+    
+  }
 /* Autocomplete styles */
 
 .autocomplete-wrapper {
   position: relative;
-  width: 300px;
+  width: 100%;
 }
 
 .autocomplete-dropdown {
@@ -133,10 +167,40 @@
   border-top: none; 
   z-index: 1000; 
   border-radius: 0 0 4px 4px;
-  max-height: 200px; 
+  max-height: 15vh; 
   overflow-y: auto;
+  margin-top: 0;
+  margin-left: 50px;
+  width: 89%;
 }
-
+@media screen and (max-width: 1600px) {
+  .autocomplete-dropdown {
+    width: 86%;
+  }
+@media screen and (max-width: 1200px) {
+  .autocomplete-dropdown {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 900px) {
+  .autocomplete-dropdown {
+    width: 72%;
+  }
+}
+@media screen and (max-width: 751px) {
+  .autocomplete-dropdown {
+    width: 63%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .autocomplete-dropdown {
+    width: 70%;
+    padding-left: 5px;
+    margin-left: 47px;
+  }
+  
+}
+}
 .autocomplete-dropdown.active {
   display: block;
 }
@@ -166,7 +230,7 @@
   width: 100%;
   background-color: grey;
   position: static; /* Keep it in the normal document flow */
-  margin-top: 10px; /* Push down to the bottom */
+  margin-top: auto; /* Push down to the bottom */
 }
 
 .search-results {
@@ -175,18 +239,37 @@
 }
 
 /* Add these styles for clickable history words */
+.haft-left-section{
+  display: flex;
+  width: 100%;
+}
+.search-history-section {
+  height: 50vh;
+  margin-left: 5vh;
+  margin-right: 5vh;
+}
 .search-history-section ul {
   opacity: 0.8;
   list-style-type: none;
   padding: 0;
   margin: 0;
-  margin-right: 100px;
   background-color: aliceblue;
   border: #363636 1px solid;
   border-radius: 10px;
-  height: 400px;
+  height: 100%;
   overflow: auto;
-  width: 500px;
+  width: 25vw;
+  margin-left: 2vw;
+}
+
+.search-results-box span{
+  font-weight: bold;
+}
+.search-results-box .syn{
+  color: #4CAF50;
+}
+.search-results-box .ant{
+  color: red;
 }
 
 .search-history-section li {
@@ -195,6 +278,7 @@
   margin-bottom: 5px;
   border-bottom: #363636 1px solid;
   padding-left: 10px;
+  font-weight: bold;
 }
 
 .search-history-section li:hover {
@@ -206,7 +290,6 @@
 
 .cross-section {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
 }
@@ -216,8 +299,8 @@
   background-color: aliceblue;
   opacity: 0.8;
   border-radius: 10px;
-  width: 50%;
-  height: 300px;
+  width: 50vw;
+  height: 100%;
   margin-left: 50px;
   margin-right: 40px;
   padding: 20px;
@@ -229,9 +312,16 @@
   box-sizing: border-box;
   overflow: auto;
   flex-grow: 1;
-  width: 100%;
+  width: 52.5vw;
   display: flex;
+  background-color: white;
   justify-content: center;
+  margin-left: 50px;
+  margin-right: 40px;
+  padding: 20px;
+  opacity: 0.8;
+  border: 2px solid black;
+  border-radius: 10px;
 }
 
 .search-results-box {
@@ -311,4 +401,107 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+  .au-button{
+    font-size: 12px;
+    height: 4vh;
+  }
+  .cross-section{
+    align-items: normal;
+    margin-bottom: 20px;
+  }
+  .todays-sentence{
+    height: fit-content;
+  }
+  .haft-left-section{
+    height: fit-content;
+  }
+  .search-history-section ul{
+    height: 70vh;
+  }
+  .todays-sentence{
+    width: 48vw;
+  }
+  .header p{
+    font-size: 25px;
+  }
+  .header p span{
+    font-size: 20px;
+  }
+  .search-box input{
+   width: 85%;
+  }
+}
+@media screen and (max-width: 751px) {
+  .cross-section{
+    flex-direction: column;
+    padding-left: 20px;
+    width: fit-content;
+  }
+  .search-history-section{
+    height: fit-content;
+    width: fit-content;
+    margin: 0;
+  }
+  .search-history-section ul{
+    width: 90vw;
+    height: 20vh;
+    margin: 0;
+  }
+  .half-right-section{
+    width: 90vw;
+  }
+  .history-section {
+    width: fit-content;
+  }
+  .todays-sentence{
+    width: 48vw;
+  }
+  .search-box input{
+   width: 85%;
+  }
+  .search-box button{
+    font-size: 15px;
+    width: 10vh;
+  }
+  .search-results-container{
+    width: 90vw;
+    margin: 0;
+    font-size: 15px
+  }
+  .todays-sentence{
+    width: 87vw;
+    margin: 0;
+    padding: 10px;
+  }
+  .search-box input{
+    width: 80%;
+  }
+  
+}
+
+@media screen and (max-width: 600px) {
+  .au-button{
+    font-size: 10px;
+    width: 10vw;
+  }
+  .header p{
+    font-size: 15px;
+  }
+  .header p span{
+    font-size: 15px;
+  }
+  .todays-sentence{
+    width: 85vw;
+  }
+  .search-box input{
+    width: 80%;
+  }
+  .search-box button{
+    width: 20vw;
+    padding: 0;
+    margin-left: 50px;
+  }
 }
