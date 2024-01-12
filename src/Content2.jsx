@@ -26,7 +26,6 @@ const Content = ({
 }) => {
   const navigate = useNavigate();
 
-  const userId = localStorage.getItem("userId");
   const username = localStorage.getItem("username");
 
   const blurResultDefinition = () => {
@@ -37,7 +36,7 @@ const Content = ({
         wordMeaning[i].style.backgroundColor = "";
         blurButton.textContent = "Blur Definition";
       } else {
-        blurButton.textContent = "Disable blur";
+        blurButton.textContent = "Disable blurring";
         wordMeaning[i].style.backgroundColor = "black";
       }
     }
@@ -116,15 +115,15 @@ const Content = ({
 
             <TabPanel>
               <div className="history-section">
-                {userSearchHistory.length > 0 ? (
-                  <div className="search-history-section">
-                    <h2>User Search History</h2>
-                    <button
-                      className="au-button"
-                      onClick={handleClearUserSearchHistory}
-                    >
-                      Clear History
-                    </button>
+                <div className="search-history-section">
+                  <h2>User Search History</h2>
+                  <button
+                    className="au-button"
+                    onClick={handleClearUserSearchHistory}
+                  >
+                    Clear History
+                  </button>
+                  {userSearchHistory.length > 0 ? (
                     <ul>
                       {userSearchHistory.map((term, index) => (
                         <li
@@ -135,13 +134,12 @@ const Content = ({
                         </li>
                       ))}
                     </ul>
-                  </div>
-                ) : (
-                  <p>No search history found.</p>
-                )}
+                  ) : (
+                    <ul>No search history found.</ul>
+                  )}
+                </div>
               </div>
             </TabPanel>
-
             <TabPanel>
               {/* Display TOEFL */}
               {TOEFL && TOEFL.length > 0 && (
@@ -174,9 +172,9 @@ const Content = ({
             </TabPanel>
             <TabPanel>
               <div className="favorites-section">
-                {favorites.length > 0 && (
-                  <div className="search-history-section">
-                    <h2>Favorites</h2>
+                <div className="search-history-section">
+                  <h2>Favorites</h2>
+                  {favorites.length > 0 ? (
                     <ul>
                       {favorites.map((term, index) => (
                         <li key={index}>
@@ -192,8 +190,10 @@ const Content = ({
                         </li>
                       ))}
                     </ul>
-                  </div>
-                )}
+                  ) : (
+                    <ul>You dont have a favorite word</ul>
+                  )}
+                </div>
               </div>
             </TabPanel>
           </Tabs>
@@ -238,15 +238,15 @@ const Content = ({
           </div>
           <br></br>
           <div className="blur-buttons">
-            <div className="blurTooltip">
-              {" "}
+            <div class="blurTooltip">
               <button
                 className="au-button"
                 id="blurResultDefinitionButton"
                 onClick={blurResultDefinition}
+                data-tip="Blur Definition"
               >
                 Blur Definition
-              </button>
+              </button>{" "}
               <span class="blurTooltipText">
                 For student who wants to memorize this word!
               </span>

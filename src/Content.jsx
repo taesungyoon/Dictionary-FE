@@ -26,7 +26,7 @@ const Content = ({
         wordMeaning[i].style.backgroundColor = "";
         blurButton.textContent = "Blur Definition";
       } else {
-        blurButton.textContent = "Disable blur";
+        blurButton.textContent = "Disable blurring";
         wordMeaning[i].style.backgroundColor = "black";
       }
     }
@@ -91,17 +91,12 @@ const Content = ({
             </TabList>
             <TabPanel>
               <div className="history-section">
-                {searchHistory.length > 0 ? (
-                  <div className="search-history-section">
-                    <div className="search-history-header">
-                      <h2>Search History</h2>
-                      <button
-                        className="clear-history-button au-button"
-                        onClick={handleClearHistory}
-                      >
-                        Clear History
-                      </button>
-                    </div>
+                <div className="search-history-section">
+                  <h2>Search History</h2>
+                  <button className="au-button" onClick={handleClearHistory}>
+                    Clear History
+                  </button>
+                  {searchHistory.length > 0 ? (
                     <ul>
                       {searchHistory.map((term, index) => (
                         <li
@@ -112,10 +107,10 @@ const Content = ({
                         </li>
                       ))}
                     </ul>
-                  </div>
-                ) : (
-                  <p>No search history found.</p>
-                )}
+                  ) : (
+                    <ul> No search history found.</ul>
+                  )}
+                </div>
               </div>
             </TabPanel>
 
@@ -192,15 +187,15 @@ const Content = ({
           </div>
           <br></br>
           <div className="blur-buttons">
-            <div className="blurTooltip">
-              {" "}
+            <div class="blurTooltip">
               <button
                 className="au-button"
                 id="blurResultDefinitionButton"
                 onClick={blurResultDefinition}
+                data-tip="Blur Definition"
               >
                 Blur Definition
-              </button>
+              </button>{" "}
               <span class="blurTooltipText">
                 For student who wants to memorize this word!
               </span>

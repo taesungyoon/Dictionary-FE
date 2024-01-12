@@ -1,15 +1,13 @@
 // App.jsx
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import './App.css';
-import Dictionary from './component/Dictionary';
-import Login from './component/Login';
-import Signup from './component/Signup';
-import Dictionary2 from './component/Dictionary2';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
+import Dictionary from "./component/Dictionary";
+import Login from "./component/Login";
+import Signup from "./component/Signup";
+import Dictionary2 from "./component/Dictionary2";
 
 function App() {
-  const userId = localStorage.getItem('userId');
-
   return (
     <Router>
       <Routes>

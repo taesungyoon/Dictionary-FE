@@ -11,14 +11,14 @@ export default function Signup() {
     const { username, password } = values;
 
     // Kiểm tra định dạng của username
-    const usernameRegex = /^[a-zA-Z0-9]{8,15}$/;
+    const usernameRegex = /^[a-zA-Z0-9]{5,15}$/;
     if (!usernameRegex.test(username)) {
       return alert("Invalid username format");
     }
 
     // Kiểm tra định dạng của password
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{5,20}$/;
     if (!passwordRegex.test(password)) {
       return alert("Invalid password format");
     }
