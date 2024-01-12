@@ -138,6 +138,7 @@ const Dictionary = () => {
   const handleAddToFavorites = () => {
     if (!userId) {
       console.error("User ID is not set. Please log in.");
+      alert("User ID is not set. Please log in.");
       return;
     }
     if (!wordData) {
@@ -153,26 +154,25 @@ const Dictionary = () => {
       },
       body: JSON.stringify({ userId: userId }),
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Failed to mark word as favorite.");
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (data.success) {
-        alert(`"${wordToAdd}" added to favorites.`);
-        setFavorites(prevFavorites => [...prevFavorites, wordToAdd]);
-      } else {
-        alert(data.message);
-      }
-    })
-    .catch(error => {
-      console.error("Error marking word as favorite:", error);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to mark word as favorite.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.success) {
+          alert(`"${wordToAdd}" added to favorites.`);
+          setFavorites((prevFavorites) => [...prevFavorites, wordToAdd]);
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error marking word as favorite:", error);
+      });
   };
 
-  
   // getting favorite words in the database
   const fetchFavorites = async (id) => {
     try {
@@ -189,28 +189,30 @@ const Dictionary = () => {
   const isWordFavorited = (word) => {
     return favorites.includes(word);
   };
-  
+
   // remove the words from favorite
   const handleRemoveFromFavorites = (wordToRemove) => {
     fetch(`http://localhost:5000/api/favorite/${wordToRemove}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ userId }),
     })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        setFavorites(favorites => favorites.filter(word => word !== wordToRemove));
-        alert(`"${wordToRemove}" has been removed from favorites.`);
-      } else {
-        alert(data.message);
-      }
-    })
-    .catch(error => {
-      console.error('Error removing word from favorites:', error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setFavorites((favorites) =>
+            favorites.filter((word) => word !== wordToRemove)
+          );
+          alert(`"${wordToRemove}" has been removed from favorites.`);
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error removing word from favorites:", error);
+      });
   };
 
   // fetch the IETLS from dictionary ver2
