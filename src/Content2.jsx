@@ -1,12 +1,13 @@
 import React from "react";
 import Autocomplete from "./Autocomplete";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
+import "react-tabs/style/react-tabs.css"; // tabs styles
+import "react-tooltip/dist/react-tooltip.css"; // tooltip styles
+import { useNavigate } from "react-router-dom";
 
 const Content = ({
   inpWord,
   setInpWord,
-  displayedWord,
   randomWord,
   wordData,
   error,
@@ -14,26 +15,29 @@ const Content = ({
   handleSearchWord,
   suggestions,
   onSelectSuggestion,
-  searchHistory,
   TOEFL,
   IELTS,
+  favorites,
+  handleAddToFavorites,
+  handleRemoveFromFavorites,
+  userSearchHistory,
+  handleClearUserSearchHistory,
+  isWordFavorited,
 }) => {
-  const blurResultWord = () => {
-    var wordMeaning = document.getElementsByClassName("result-word");
-    for (var i = 0; i < wordMeaning.length; i++) {
-      if (wordMeaning[i].style.backgroundColor === "black") {
-        wordMeaning[i].style.backgroundColor = "";
-      } else {
-        wordMeaning[i].style.backgroundColor = "black";
-      }
-    }
-  };
+  const navigate = useNavigate();
+
+  const userId = localStorage.getItem("userId");
+  const username = localStorage.getItem("username");
+
   const blurResultDefinition = () => {
     var wordMeaning = document.getElementsByClassName("result-definition");
+    var blurButton = document.getElementById("blurResultDefinitionButton");
     for (var i = 0; i < wordMeaning.length; i++) {
       if (wordMeaning[i].style.backgroundColor === "black") {
         wordMeaning[i].style.backgroundColor = "";
+        blurButton.textContent = "Blur Definition";
       } else {
+        blurButton.textContent = "Disable blur";
         wordMeaning[i].style.backgroundColor = "black";
       }
     }
@@ -47,21 +51,43 @@ const Content = ({
     setInpWord(term);
     handleSearchWord(term);
   };
+
+  const handleClickFavorites = (term) => {
+    setInpWord(term);
+    handleSearchWord(term);
+  };
+
   const handleClickIELTS = (lemma) => {
+    setInpWord(lemma);
     handleSearchWord(lemma);
   };
   const handleClickTOEFL = (lemma) => {
+    setInpWord(lemma);
     handleSearchWord(lemma);
+  };
+
+  const handleLogout = () => {
+    // Xóa userId khỏi localStorage
+    localStorage.removeItem("userId");
+    // Xoá username khỏi localStorage
+    localStorage.removeItem("username");
+    // Thực hiện chuyển hướng đến trang đăng nhập
+    navigate("/");
   };
 
   return (
     <div className="dictionary-app">
       <header className="header">
-        <p>
-          BITS <span>- English Dictionary</span>
-        </p>
-        <button className="au-button">
-          <a href="/">Logout</a>
+        <a href="/User" className="logo">
+          <p>
+            BITS <span>- English Dictionary</span>
+          </p>
+        </a>
+        <span className="displayUsername" style={{ fontSize: "14px" }}>
+          {username}
+        </span>
+        <button className="au-button" onClick={handleLogout}>
+          Logout
         </button>
       </header>
 
@@ -76,7 +102,6 @@ const Content = ({
           {isLoading ? "Searching..." : "Search"}
         </button>
       </form>
-
       {/* Display Main Tabs*/}
       <div className="cross-section">
         <div className="half-left-section">
@@ -90,27 +115,33 @@ const Content = ({
             </TabList>
 
             <TabPanel>
-              <p>
-                {" "}
-                <div className="history-section">
-                  {searchHistory.length > 0 && (
-                    <div className="search-history-section">
-                      <h2>Search History</h2>
-                      <ul>
-                        {searchHistory.map((term, index) => (
-                          <li
-                            key={index}
-                            onClick={() => handleClickHistory(term)}
-                          >
-                            {term}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              </p>
+              <div className="history-section">
+                {userSearchHistory.length > 0 ? (
+                  <div className="search-history-section">
+                    <h2>User Search History</h2>
+                    <button
+                      className="au-button"
+                      onClick={handleClearUserSearchHistory}
+                    >
+                      Clear History
+                    </button>
+                    <ul>
+                      {userSearchHistory.map((term, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleClickHistory(term)}
+                        >
+                          {term}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <p>No search history found.</p>
+                )}
+              </div>
             </TabPanel>
+
             <TabPanel>
               {/* Display TOEFL */}
               {TOEFL && TOEFL.length > 0 && (
@@ -142,9 +173,28 @@ const Content = ({
               )}
             </TabPanel>
             <TabPanel>
-              <p>
-                <b>Favortie</b>
-              </p>
+              <div className="favorites-section">
+                {favorites.length > 0 && (
+                  <div className="search-history-section">
+                    <h2>Favorites</h2>
+                    <ul>
+                      {favorites.map((term, index) => (
+                        <li key={index}>
+                          <span onClick={() => handleClickFavorites(term)}>
+                            {term}
+                          </span>
+                          <button
+                            className="au-button"
+                            onClick={() => handleRemoveFromFavorites(term)}
+                          >
+                            Remove
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             </TabPanel>
           </Tabs>
         </div>
@@ -155,12 +205,12 @@ const Content = ({
             {wordData && (
               <div className="search-results-box">
                 <div className="result-header">
-                  <h3 className="result-word">{wordData.lemma}</h3>
+                  <h2 className="result-word">{wordData.lemma}</h2>
                   {/* Audio will be put here later */}
                 </div>
                 <div className="meaning">
-                  <p className="result-definition">{wordData.definition}</p>
-                  <p>
+                  <h5 className="result-definition">{wordData.definition}</h5>
+                  <h5>
                     <span className="syn">
                       Synonyms:{" "}
                       {wordData.synonyms ? (
@@ -170,8 +220,8 @@ const Content = ({
                         <p>"There's no matched synonyms"</p>
                       )}
                     </span>
-                  </p>
-                  <p>
+                  </h5>
+                  <h5>
                     <span className="ant">
                       Antonyms:{" "}
                       {wordData.antonyms ? (
@@ -181,21 +231,42 @@ const Content = ({
                         <p>"There's no matched antonyms"</p>
                       )}
                     </span>
-                  </p>
+                  </h5>
                 </div>
               </div>
             )}
-            <div className="blur-buttons">
-              {" "}
-              <button className="au-button" onClick={blurResultWord}>
-                Blur Word
-              </button>
-              <button className="au-button" onClick={blurResultDefinition}>
-                Blur Definition
-              </button>
-            </div>
           </div>
           <br></br>
+          <div className="blur-buttons">
+            <div className="blurTooltip">
+              {" "}
+              <button
+                className="au-button"
+                id="blurResultDefinitionButton"
+                onClick={blurResultDefinition}
+              >
+                Blur Definition
+              </button>
+              <span class="blurTooltipText">
+                For student who wants to memorize this word!
+              </span>
+            </div>
+
+            <button
+              className="au-button favorite-button"
+              onClick={() => {
+                if (isWordFavorited(wordData?.lemma)) {
+                  handleRemoveFromFavorites(wordData?.lemma);
+                } else {
+                  handleAddToFavorites();
+                }
+              }}
+            >
+              {isWordFavorited(wordData?.lemma)
+                ? "Remove Favorites"
+                : "Add to Favorites"}
+            </button>
+          </div>
           <div className="todays-sentence">
             <h2>Today's Sentence</h2>
             {/* Check if randomWord is defined before trying to access its properties */}
