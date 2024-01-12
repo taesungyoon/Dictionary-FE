@@ -1,10 +1,11 @@
 import React from "react";
 import Autocomplete from "./Autocomplete";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css"; // tabs styles
 
 const Content = ({
   inpWord,
   setInpWord,
-  displayedWord,
   randomWord,
   wordData,
   error,
@@ -13,7 +14,24 @@ const Content = ({
   suggestions,
   onSelectSuggestion,
   searchHistory,
+  TOEFL,
+  IELTS,
+  handleClearHistory,
 }) => {
+  const blurResultDefinition = () => {
+    var wordMeaning = document.getElementsByClassName("result-definition");
+    var blurButton = document.getElementById("blurResultDefinitionButton");
+    for (var i = 0; i < wordMeaning.length; i++) {
+      if (wordMeaning[i].style.backgroundColor === "black") {
+        wordMeaning[i].style.backgroundColor = "";
+        blurButton.textContent = "Blur Definition";
+      } else {
+        blurButton.textContent = "Disable blurring";
+        wordMeaning[i].style.backgroundColor = "black";
+      }
+    }
+  };
+
   const onSubmitSearch = (event) => {
     event.preventDefault();
     handleSearchWord(inpWord);
@@ -24,12 +42,21 @@ const Content = ({
     handleSearchWord(term);
   };
 
+  const handleClickIELTS = (lemma) => {
+    handleSearchWord(lemma);
+  };
+  const handleClickTOEFL = (lemma) => {
+    handleSearchWord(lemma);
+  };
+
   return (
     <div className="dictionary-app">
       <header className="header">
-        <p>
-          BITS <span>- English Dictionary</span>
-        </p>
+        <a href="/" className="logo">
+          <p>
+            BITS <span>- English Dictionary</span>
+          </p>
+        </a>
         <div className="ath-buttons">
           <button className="au-button">
             <a href="/Login">Login</a>
@@ -52,25 +79,74 @@ const Content = ({
         </button>
       </form>
 
-      {/* Display Search History */}
-
+      {/* Display Main Tabs*/}
       <div className="cross-section">
         <div className="half-left-section">
-          <div className="history-section">
-            {searchHistory.length > 0 && (
-              <div className="search-history-section">
-                <h2>Search History</h2>
-                <ul>
-                  {searchHistory.map((term, index) => (
-                    <li key={index} onClick={() => handleClickHistory(term)}>
-                      {term}
-                    </li>
-                  ))}
-                </ul>
+          {/*Tabs */}
+          <Tabs>
+            <TabList className={"MainTabs"}>
+              <Tab>Search History</Tab>
+              <Tab>TOEFL</Tab>
+              <Tab>IELTS</Tab>
+            </TabList>
+            <TabPanel>
+              <div className="history-section">
+                <div className="search-history-section">
+                  <h2>Search History</h2>
+                  <button className="au-button" onClick={handleClearHistory}>
+                    Clear History
+                  </button>
+                  {searchHistory.length > 0 ? (
+                    <ul>
+                      {searchHistory.map((term, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleClickHistory(term)}
+                        >
+                          {term}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <ul> No search history found.</ul>
+                  )}
+                </div>
               </div>
-            )}
-          </div>
+            </TabPanel>
+
+            <TabPanel>
+              {/* Display TOEFL */}
+              {TOEFL && TOEFL.length > 0 && (
+                <div className="search-history-section">
+                  <h2>TOEFL</h2>
+                  <ul>
+                    {TOEFL.map((lemma, index) => (
+                      <li key={index} onClick={() => handleClickTOEFL(lemma)}>
+                        {lemma}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </TabPanel>
+            <TabPanel>
+              {/* Display IELTS */}
+              {IELTS && IELTS.length > 0 && (
+                <div className="search-history-section">
+                  <h2>IELTS</h2>
+                  <ul>
+                    {IELTS.map((lemma, index) => (
+                      <li key={index} onClick={() => handleClickIELTS(lemma)}>
+                        {lemma}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </TabPanel>
+          </Tabs>
         </div>
+
         <div className="half-right-section">
           <h2>Search Results</h2>
           <div className="search-results-container">
@@ -110,6 +186,22 @@ const Content = ({
             )}
           </div>
           <br></br>
+          <div className="blur-buttons">
+            <div class="blurTooltip">
+              <button
+                className="au-button"
+                id="blurResultDefinitionButton"
+                onClick={blurResultDefinition}
+                data-tip="Blur Definition"
+              >
+                Blur Definition
+              </button>{" "}
+              <span class="blurTooltipText">
+                For student who wants to memorize this word!
+              </span>
+            </div>
+          </div>
+
           <div className="todays-sentence">
             <h2>Today's Sentence</h2>
             {/* Check if randomWord is defined before trying to access its properties */}
@@ -121,6 +213,7 @@ const Content = ({
           </div>
         </div>
       </div>
+
       <footer className="footer">© 2023 Bitsdictionary.com</footer>
     </div>
   );
